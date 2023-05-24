@@ -1,0 +1,38 @@
+p{
+  width: 200px;
+  height: 100px;
+  border: 1px solid;
+  text-align: center;
+   box-sizing: border-box;
+   padding:30px;
+   margin-top:50px;
+   margin-left:40px;
+   line-height:1;
+}
+
+
+button{
+	color: #15897a;
+	background-color: black;
+}
+
+#my-element {
+  color: red;
+}
+
+h1 {
+  color: blue;
+}
+ul {
+    list-style-type: none;
+    border:1px solid;
+    width:200px;
+}
+
+li{
+  	  border:1px solid;
+}
+
+table, th, td {
+    border: 1px solid black;
+}

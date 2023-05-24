@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+body{
+	font-family:Helvetica;
+	background-color:#282828;
+	color:#333333;
+}
+
+.container{
+	max-width:400px;
+	margin:auto;
+	margin-top:30%;
+	background-color:#ffffff;
+	padding: 20px;
+	border-radius:50px;
+	box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.container h1{
+	text-align:center;
+	font-size:39px;
+}
+.formg label{
+	display :block;
+	font-weight:bold;
+	margin-bottom:5px;
+	color:#555555;
+}
+
+.formg{
+	margin-bottom:15px;
+}
+
+.formg input[type="submit"]{
+	background-color:#4caf50;
+	color:#ffffff;;
+	cursor:pointer;
+	border-radius:10px;
+	border:none;
+}
+.formg input[type="submit"]:hover{
+	background-color:#6e7828;	
+	
+}
