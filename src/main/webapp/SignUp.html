@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="website designed for doing tomcat exercise">
+<meta name="keywords" content="website, designed ,tomcat ,exercise">
+<title>SignUp Page</title>
+<link  href="loginstyle.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- <form action="add" method="get">
+  Enter 1st no: <input type="text" name="num1"><br>
+  Enter 2nd no: <input type="text" name="num2"><br>
+  <input type="submit">
+</form>
+ -->
+
+<div class="container">
+ <h1>Sign Up</h1>
+ <form id="sub">
+   <div class="formg">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+   </div>
+   <div class="formg">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+   </div>
+   <div class="formg">
+    <label for="mobile">Mobile no:</label>
+    <input type="number" id="mobile" name="mobile" required>
+   </div>
+   <div class="formg">
+    <label for="dob">Date Of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+   </div>
+   <div class="formg">
+     <label for="name">Gender:</label>
+    <select id="gender" name="gender" required>
+       <option value="">Select </option>
+       <option value="male">Male</option>
+       <option value="female">Female </option>
+    </select>
+   </div>
+   <div class="formg">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+   </div>
+   <div class="formg">
+    <input type="submit" value="Sign Up" >
+   </div>
+ </form>
+</div>
+
+<script>
+function handleFormSubmit(event){
+  event.preventDefault();
+  const form=event.target;
+  const formData =new FormData(form);
+  const name=formData.get("name");
+  const email=formData.get("email");
+  const mobile=formData.get("mobile");
+  const dob=formData.get("dob");
+  const gender=formData.get("gender");
+  const password=formData.get("password");
+
+fetch("http://localhost:3000/users",{
+  method: "POST",
+  body:JSON.stringify({
+    name,email,mobile,dob,gender,password
+  }),headers:{"Content-Type":"application/json"}
+})
+ .then(response=>response.json())
+ .then(data=>{console.log(data);
+ form.reset();
+ window.location.replace("http://localhost:8080/TomcatExercises/Login.html");
+})
+ .catch(error=>{console.error(error);
+});
+}
+  document.addEventListener("DOMContentLoaded",()=>{
+  const form=document.getElementById("sub");
+  form.addEventListener("submit",handleFormSubmit);
+});
+
+</script>
+
+
+</body>
+
+</html>

@@ -7,49 +7,68 @@
 <title>Login Page</title>
 <link  href="loginstyle.css" rel="stylesheet">
 </head>
+
 <body>
-
-<!-- <form action="add" method="get">
-  Enter 1st no: <input type="text" name="num1"><br>
-  Enter 2nd no: <input type="text" name="num2"><br>
-  <input type="submit">
-</form>
- -->
-
 <div class="container">
- <h1>Sign Up</h1>
- <form>
-   <div class="formg">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-   </div>
+ <h1>BROS</h1>
+ <form id="sub">
    <div class="formg">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
    </div>
    <div class="formg">
-    <label for="mobile">Mobile no:</label>
-    <input type="number" id="mobile" name="mobile" required>
+    <label for="email">Password:</label>
+    <input type="password" id="password" name="password" required>
    </div>
    <div class="formg">
-    <label for="dob">Date Of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
+    <input type="submit" value="Login" >
    </div>
    <div class="formg">
-     <label for="name">Gender:</label>
-    <select id="gender" name="gender" required>
-       <option value="">Select </option>
-       <option value="male">Male</option>
-       <option value="female">Female </option>
-    </select>
+    <a href="http://localhost:8080/TomcatExercises/SignUp.html">New here?</a>
    </div>
-   <div class="formg">
-    <input type="submit" value="Sign Up" >
-   </div>
- </form>
-
+ </form> 
 </div>
 
+
+<script>
+
+function handleFormSubmit(event){
+	  event.preventDefault();
+	  const form=event.target;
+	  const formData =new FormData(form);
+	
+	  const email=formData.get("email");
+	  const password=formData.get("password");
+
+	fetch('http://localhost:3000/users',{
+	  method: "GET"
+	})
+	 .then(response=>response.json())
+	 .then(data=>{
+	 const user=data.find(user=>user.email===email);	 
+     console.log(data);
+     if(user && user.password===password){
+    	 alert("Login succesful");
+    	 const userJSON=JSON.stringify(user);
+    	 sessionStorage.setItem("user",userJSON);
+    	 window.location.replace("http://localhost:8080/TomcatExercises/userProfile.html");
+     }
+     else{
+    	 alert("Login failed!!");
+     }
+    // form.reset();
+	 })
+	 .catch(error=>{console.error(error);
+	 alert("An error occured!!");
+	});
+	}
+
+	  document.addEventListener("DOMContentLoaded",()=>{
+	  const form=document.getElementById("sub");
+	  form.addEventListener("submit",handleFormSubmit);
+	})
+
+</script>
 
 </body>
 

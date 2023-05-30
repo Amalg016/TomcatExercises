@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link  href="userprofile.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="main">
+   
+    <div class="navigation">
+      
+       <h1 class="username" id="username"></h1>
+        <a href="#">Activity Feed</a>
+        <a href="#">Notifications</a>
+        <a href="#">Friends</a>
+        <a href="#">Messages</a>
+        <a href="#">Profile</a>
+        <button onClick="window.location.replace('http://localhost:8080/TomcatExercises/Login.html');"><b>Logout</b></button>
+    </div>
+
+    <div class="body">
+
+    <section class="notifications">
+      <!-- Notifications content goes here -->
+      <p>Welcome to Bros APP :) </p>
+    </section>
+
+    <section class="friend-list">
+     <h3>Friends</h3>
+     
+      <!-- Friend list content goes here -->
+    </section>
+
+    <section class="messages">
+      <!-- Messages content goes here -->
+    </section>
+    
+     <section class="Profile">
+      <!-- Profile content goes here -->
+<div class="formg">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+   </div>
+   <div class="formg">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+   </div>
+   <div class="formg">
+    <label for="mobile">Mobile no:</label>
+    <input type="number" id="mobile" name="mobile" required>
+   </div>
+   <div class="formg">
+    <label for="dob">Date Of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+   </div>
+   <div class="formg">
+     <label for="name">Gender:</label>
+    <select id="gender" name="gender" required>
+       <option value="">Select </option>
+       <option value="male">Male</option>
+       <option value="female">Female </option>
+    </select>
+   </div>
+   <div class="formg">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+   </div>
+
+        <button onClick="updateDetails();">Save</button>
+     
+     <br><br>
+        <button onClick="deleteUser();">Delete</button>
+        
+    </section>
+    </div>
+  </div>
+
+ <script>
+   
+ //  document.getElementByClassName("Profile");
+   const userJSON=sessionStorage.getItem("user");
+   const user=JSON.parse(userJSON);
+   const uName=document.getElementById("username");
+   uName.textContent=user.name;
+     console.log(user);
+   
+     const nameInput = document.getElementById("name");
+     nameInput.value=user.name;
+     const emailInput = document.getElementById("email");
+     emailInput.value=user.email;
+     const phoneInput = document.getElementById("mobile");
+     alert(user.mobile);
+     phoneInput.value=user.mobile;
+     const dobInput=document.getElementById("dob");
+     dobInput.value=user.dob;
+     const genderInput=document.getElementById("gender");
+     genderInput.value=user.gender;
+     const passwordInput=document.getElementById("password");
+     passwordInput.value=user.password;
+     
+     
+      
+     // Function to handle updating user details
+     function updateDetails() {
+       const updatedName = nameInput.value;
+       const updatedEmail = emailInput.value;
+       const updatedPhone = phoneInput.value;
+       const updatedDob=dobInput.value;
+       const updatedGender=genderInput.value;
+       const updatedPassword=passwordInput.value;
+       // Prepare the data to send to the API
+       const data = {
+         name: updatedName,
+         email: updatedEmail,
+         mobile: updatedPhone,
+         dob:updatedDob,
+         gender:updatedGender,
+         password:updatedPassword,
+       };
+
+       // Send a PUT request to update the user details
+       const url="http://localhost:3000/users/"+user.id;
+       fetch(url, {
+         method: "PUT",
+         body: JSON.stringify(data),
+         headers: {
+           "Content-Type": "application/json",
+         }
+        
+       })
+         .then(function (response) {
+        	 alert(response);
+           return response.json();
+         })
+         .then(function (updatedData) {
+           // Update the session storage with the updated profile information
+          
+           user.name = updatedData.name;
+           user.email = updatedData.email;
+           user.mobile = updatedData.mobile;
+           user.dob= updatedData.dob;
+           user.gender= updatedData.gender;
+           user.password=updatedData.password;
+           sessionStorage.setItem("user", JSON.stringify(user));
+
+           // Display success message or handle the response as needed
+           console.log("Details updated successfully:", updatedData);
+         })
+         .catch(function (error) {
+           console.log(error);
+           // Display error message or handle the error as needed
+         });
+     };
+     
+     
+     //Deleting the user from the jsonServor-Users[]
+     const deleteUser = () => {
+ 	    if(!confirm("Are you sure?"))
+ 	        return;
+ 	    fetch("http://localhost:3000/users/"+user.id, {
+ 	        method: 'DELETE'
+ 	    })
+ 	    .then(response => {
+ 	        if(response.ok){
+ 	            alert('User deleted successfully');
+ 	            window.location.replace("Login.html");
+ 	        }
+ 	        else{
+ 	            console.log('Error:',response.statusText);
+ 	        }
+ 	    })
+ 	    .catch(function (error) {
+ 	           console.log(error);
+ 	    });
+ 	}
+ </script>
+</body>
+</html>
